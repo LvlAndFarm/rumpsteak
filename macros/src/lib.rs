@@ -1,3 +1,5 @@
+#![feature(proc_macro_span)]
+
 use proc_macro::TokenStream;
 
 mod message;
@@ -5,6 +7,7 @@ mod parse;
 mod role;
 mod roles;
 mod session;
+mod nuscr;
 
 #[proc_macro_derive(Message)]
 pub fn message(input: TokenStream) -> TokenStream {
@@ -32,4 +35,9 @@ pub fn session(attr: TokenStream, input: TokenStream) -> TokenStream {
     session::session(attr.into(), input.into())
         .unwrap_or_else(|err| err.to_compile_error())
         .into()
+}
+
+#[proc_macro]
+pub fn use_nuscr_protocol(_input: TokenStream) -> TokenStream {
+    nuscr::generate_nuscr_rs(_input)
 }

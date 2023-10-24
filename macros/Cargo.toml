@@ -14,9 +14,16 @@ categories = ["asynchronous", "concurrency"]
 proc-macro = true
 
 [dependencies]
+compile-time-run = "0.2.12"
+litrs = "0.4.0"
 proc-macro2 = "1.0"
 quote = "1.0"
 syn = { version = "1.0", features = ["extra-traits", "full"] }
+tempfile = "3.8.0"
+
+[dev-dependencies]
+futures = "*"
+rumpsteak = { path = ".." }
 
 [features]
 serialize = []
