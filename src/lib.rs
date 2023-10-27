@@ -1,5 +1,6 @@
 pub mod channel;
 pub mod serialize;
+pub mod build;
 
 pub use rumpsteak_macros::{session, Message, Role, Roles};
 
