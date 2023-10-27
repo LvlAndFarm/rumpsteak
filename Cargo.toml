@@ -35,6 +35,7 @@ compile-time-run = "0.2.12"
 futures = "0.3"
 rumpsteak-fsm = { path = "fsm", version = "0.1", optional = true }
 rumpsteak-macros = { path = "macros", version = "0.1" }
+tempfile = "3.2"
 thiserror = "1.0"
 
 [dev-dependencies]
@@ -44,8 +45,8 @@ num-complex = "0.4"
 rand = { version = "0.8" }
 rumpsteak-fsm = { path = "fsm", features = ["subtyping"] }
 rumpsteak-oneshot = { path = "oneshot" }
-tempfile = "3.2"
 tokio = { version = "1.6", features = ["macros", "rt", "time"] }
+
 
 [features]
 serialize = ["rumpsteak-fsm", "rumpsteak-macros/serialize"]
