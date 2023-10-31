@@ -62,12 +62,10 @@ pub fn create_protocols_module(module_filepath: PathBuf, included_protocols: Vec
     fs::write(module_filepath, contents).unwrap()
 }
 
-pub fn compile_nuscr_protocols() {
-    let root = env::var_os("CARGO_MANIFEST_DIR").unwrap();
-    let protocol_folder = Path::new(&root).join("src/protocols");
-    let nuscr_source_folder = protocol_folder.join("nuscr");
-    println!("cargo:rerun-if-changed={}", protocol_folder.to_str().unwrap());
-    let protocols = fs::read_dir(nuscr_source_folder).expect("Couldn't find src/protocols/nuscr/ folder in root");
+pub fn compile_nuscr_protocols(nuscr_dir: &PathBuf, output_module_dir: &PathBuf) {
+    let nuscr_dir_path = nuscr_dir.to_str().unwrap();
+    println!("cargo:rerun-if-changed={}", nuscr_dir_path);
+    let protocols = fs::read_dir(nuscr_dir).expect(&format!("Couldn't find nuscr sources folder: {}", nuscr_dir_path));
 
     let compile_script = create_temp_compile_script ();
 
@@ -90,7 +88,7 @@ pub fn compile_nuscr_protocols() {
         // if !generated_file_name.ends_with(".nuscr") {
         //     return
         // };
-        let target_generated_path = protocol_folder.join(format!("{}.rs", generated_file_name));
+        let target_generated_path = output_module_dir.join(format!("{}.rs", generated_file_name));
 
 
         let mut file = File::create(target_generated_path).unwrap();
@@ -103,7 +101,7 @@ pub fn compile_nuscr_protocols() {
         Some(generated_file_name.to_owned())
 }).collect();
 
-    create_protocols_module(protocol_folder.join("mod.rs"), compiled_protocols);
+    create_protocols_module(output_module_dir.join("mod.rs"), compiled_protocols);
 
     temp_dir.close().unwrap();
 
