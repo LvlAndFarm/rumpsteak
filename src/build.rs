@@ -12,7 +12,7 @@ use tempfile::NamedTempFile;
 fn create_temp_compile_script() -> NamedTempFile {
     static COMPILE_SCRIPT: &str = r#"#!/bin/sh
 
-    GENERATE="$(which ./.bin/.shims/rumpsteak-generate || which rumpsteak-generate || echo $2)"
+    GENERATE="cargo bin rumpsteak-generate"
     
     FILE=$1
     PROTO="$(nuscr --enum $FILE | sed -n -e "/@/ s/.*@//p" | head -1)"
